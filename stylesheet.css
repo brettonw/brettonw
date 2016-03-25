@@ -1,0 +1,11 @@
+html {
+    -webkit-text-size-adjust:100%;
+    -moz-text-size-adjust:100%;
+    text-size-adjust:100%;
+}
+
+body {
+    font-family:sans-serif;
+	color:rgba(0, 0, 192, 1.0);
+	text-align:center;
+}

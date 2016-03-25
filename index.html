@@ -1,8 +1,145 @@
-<html>
+<!DOCTYPE html>
+<html style="height:700px;min-width:900px;">
 <head>
-<title>BrettonW</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Professional presence for Bretton Wade, software architect and visionary engineer.
+    Keywords: Java, Javascript" />
+    <link type="text/css" rel="stylesheet" href="stylesheet.css" />
+    <meta id="myViewport" name="viewport" content="width=900px,user-scalable=yes">
+    <script>
+        // android phones have linked font scaling for legibility with the display
+        // width layout on the device. This is stupid, but it means I *have* to
+        // set the meta tag to width=device-width. However, this causes the background
+        // to render improperly.
+        if (/Android/i.test(navigator.userAgent)) {
+            var myViewport = document.getElementById("myViewport");
+            myViewport.setAttribute("content","width=device-width,user-scalable=yes");
+        }
+    </script>
+    <title>Bretton Wade</title>
+    <script>
+        var target = "xxx";
+
+        var selected = null;
+        var selectedOldColor = null;
+		
+        var clickSection = function (which) {
+			var contentFrame = document.getElementById ("content");
+			if (selected != null) {
+				selected.style.color = selectedOldColor;
+				selected.style.textDecoration = "none";
+			}
+			selected = which;
+			//console.log ("Load: " + selected.innerHTML.toLowerCase () + ".html");
+			var name = selected.id.toLowerCase ();
+			//name = name.substring (0, name.indexOf("<br>")).trim ();
+			contentFrame.src = name + ".html?v=20160128";
+			selectedOldColor = selected.style.color;
+			selected.style.color = "blue";
+			selected.style.textDecoration = "underline";
+        }
+
+        var ready = function () {
+            // look at the position of the redbox
+            var bodyWidth = document.getElementById("body").offsetWidth;
+            var redbox = document.getElementById("redbox");
+            var redboxWidth = redbox.offsetWidth;
+            redbox.style.marginLeft = redbox.style.marginRight = ((bodyWidth - redboxWidth) / 2) + "px";
+            redbox.style.visibility = "visible";
+
+            // determine what page should load
+            console.log ("URL: " + window.location);
+            var location = new String (window.location);
+            var targetIndex = location.search(/\?/);
+            if (targetIndex >= 0) {
+                target = location.substring (targetIndex + 1);
+            }
+			
+			// now actually go there
+			if (target.search (/\//) >= 0) {
+				console.log ("New Location: " + window.location.origin + "/" + target);
+				window.location.assign(window.location.origin + "/" + target)
+			} else {
+				if (document.getElementById (target) == null) {
+					target = "home";
+				}
+				console.log ("Target: " + target);
+				clickSection (document.getElementById (target));
+			}
+        }
+    </script>
 </head>
-<body>
-The commercial website for Bretton Wade
+<body id="body" style="background:white;" onload = "ready ();">
+<div>BrettonW.com</div>
+	<div style="top:100px;width:100%;">
+        <div id="redbox" style="
+            border:none;
+            padding:0;
+            margin:0;
+            visibility: hidden;
+            width:700px;
+        ">
+            <div style="
+            border-width:2px;
+            border-style:solid;
+            border-color:rgba(0, 0, 192, 1.0);
+            margin:0;
+            padding:5px;
+            background:linear-gradient(rgba(0, 0, 255, 0.05), rgba(0, 0, 255, 0.15));
+            ">
+                <div style="
+                    text-align:center;
+                    color:white;
+                    font-size:1.125em;
+                ">
+                    <div style="display:inline-block;margin-right:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="home">Home</div>
+                    <div style="display:inline-block;margin-right:15px;margin-left:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="github">Github</div>
+                    <div style="display:inline-block;margin-left:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="musings">Musings</div>
+                </div>
+                <div style="
+                    margin-top:5px;
+                    margin-bottom:0px;
+                    margin-left:auto;
+                    margin-right:auto;
+                    width:660px;
+                    height:350px;
+                    overflow:hidden;
+                    border-style:dotted;
+                    border-width:1px;
+                    border-color:blue;
+                ">
+                    <iframe id="content" border="0" scrolling="no" style="margin:0px;padding:0px;width:100%;height:100%;border-style:none;"></iframe>
+                </div>
+                <p style="
+                    font-size:0.75em;
+                    margin:0px;
+                    margin-top:5px;
+                "><a style="color:blue;text-decoration:none;" href="mailto:bretton.wade@gmail.com">bretton.wade@gmail.com</a></p>
+            </div>
+            <div style="
+                margin:0;
+                margin-top:5px;
+                border:none;
+                padding:0;
+                font-size:0.75em;
+                color:rgba(0, 0, 192, 1.0);
+                width:100%;
+            ">
+                <div style="
+                    margin:0;
+                    padding:0;
+                    border:none;
+                    width:300px;
+                    display:inline-block;
+                    vertical-align:top;
+                ">&copy;1996-2016 Bretton Wade, All Rights Reserved.</div>
+                <!--
+                None of the browsers work right with these three items totalling
+                700 pixels, so it has to be a little bit less... IE in particular
+                needs 1 less pixel than chrome or mozilla.
+                -->
+            </div>
+        </div>
+	</div>
 </body>
 </html>
