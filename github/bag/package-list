@@ -1,3 +1,5 @@
 com.brettonw.bag
 com.brettonw.bag.expr
-com.brettonw.bag.json
+com.brettonw.bag.formats
+com.brettonw.bag.formats.json
+com.brettonw.bag.formats.url
