@@ -5,8 +5,8 @@
     <meta name="description" content="Professional presence for Bretton Wade, software architect and visionary engineer.
     Keywords: Java, Javascript" />
     <link rel="icon" type="image/png" href="img/favicon.png?v=3"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <meta id="myViewport" name="viewport" content="width=900px,user-scalable=yes">
+    <link type="text/css" rel="stylesheet" href="css/style.css?v=2" />
+    <meta id="myViewport" name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes"/>
     <script>
         // android phones have linked font scaling for legibility with the display
         // width layout on the device. This is stupid, but it means I *have* to
@@ -70,45 +70,19 @@
         }
     </script>
 </head>
-<body id="body" style="background:white;" onload = "ready ();">
-<div>BrettonW.com</div>
-	<div style="top:100px;width:100%;">
-        <div id="redbox" style="
-            border:none;
-            padding:0;
-            margin:0;
-            visibility: hidden;
-            width:700px;
-        ">
-            <div style="
-            border-width:2px;
-            border-style:solid;
-            border-color:rgba(0, 0, 192, 1.0);
-            margin:0;
-            padding:5px;
-            background:linear-gradient(rgba(0, 0, 255, 0.05), rgba(0, 0, 255, 0.15));
-            ">
-                <div style="
-                    text-align:center;
-                    color:white;
-                    font-size:1.125em;
-                ">
-                    <div style="display:inline-block;margin-right:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="home">Home</div>
-                    <div style="display:inline-block;margin-right:15px;margin-left:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="github">Github</div>
-                    <div style="display:inline-block;margin-left:15px;width:90px;color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="musings">Musings</div>
+<body id="body" onload = "ready ();">
+    <div style="text-align: center; width: 100%; margin-left:auto; margin-right:auto; height:30px; line-height: 30px; font-size: 24px;">BrettonW.com</div>
+	<div style="width:100%;">
+        <div id="redbox" style="border:none; padding:0; margin:0; visibility: hidden; width:100%;">
+            <div style="border-width:2px; border-style:solid; border-color:rgba(0, 0, 192, 1.0); margin:0; padding:5px; background:linear-gradient(rgba(0, 0, 255, 0.05), rgba(0, 0, 255, 0.15));">
+                <div style="text-align:center; color:white; font-size:1.125em; height:24px; font-size: 18px; line-height:24px;">
+                    <div style="display:inline-block; width:5%;"></div>
+                    <div style="display:inline-block; text-align:center; vertical-align:top; width:30%; color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="home">Home</div>
+                    <div style="display:inline-block; text-align:center; vertical-align:top; width:30%; color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="github">Github</div>
+                    <div style="display:inline-block; text-align:center; vertical-align:top; width:30%; color:rgba(0, 0, 192, 1.0);cursor:pointer;" onclick="clickSection(this);" id="musings">Musings</div>
+                    <div style="display:inline-block; width:5%;"></div>
                 </div>
-                <div style="
-                    margin-top:5px;
-                    margin-bottom:0px;
-                    margin-left:auto;
-                    margin-right:auto;
-                    width:660px;
-                    height:350px;
-                    overflow:hidden;
-                    border-style:dotted;
-                    border-width:1px;
-                    border-color:blue;
-                ">
+                <div style="margin-top:5px;margin-bottom:0px;margin-left:auto;margin-right:auto;width:98%;height:350px;overflow:hidden;border-style:dotted;border-width:1px;border-color:blue;">
                     <iframe id="content" border="0" scrolling="no" style="margin:0px;padding:0px;width:100%;height:100%;border-style:none;"></iframe>
                 </div>
                 <p style="
@@ -133,7 +107,7 @@
                     width:300px;
                     display:inline-block;
                     vertical-align:top;
-                ">&copy;1996-2016 Bretton Wade, All Rights Reserved.</div>
+                ">&copy;1996-2017 Bretton Wade, All Rights Reserved.</div>
                 <!--
                 None of the browsers work right with these three items totalling
                 700 pixels, so it has to be a little bit less... IE in particular
