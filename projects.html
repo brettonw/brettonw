@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="css/page-style.css" />
+    <title>Bretton Wade - Projects</title>
+</head>
+<body style="font-size:0.875em; font-weight:200;">
+	<p>I am always working on something, whether it's a web-application
+        architecture, a visualization, or just some algorithmic puzzle. I like to know how
+        things work, so I will crack open my GitHub account, create a repository, and do
+        something. Typically it will be an iOS app, a JavaScript exploration, or a Java
+        web-app for Tomcat. AWS is my current go-to for deploying static websites and
+        applications of various sorts. Here's a few things I've dabbled on you can take a
+        look at:</p>
+    <ul>
+        <li>
+            <p>
+                My background is in computer graphics. It's my first love, and I can trace
+                that all the way back to when I first started programming little games on
+                the Atari 400 computer my Dad would bring home from work on the weekends
+                (pre-1980). I periodically like to revisit the topic to keep up with
+                modern trends.
+            </p>
+            <p>
+                OpenGL hasn't been my native tongue since leaving SGI in the late 1990s,
+                but it's become the standard for 3D on the web. I looked at a few of the
+                well-known packages, like three.js, and decided I was more interested in
+                learning the lower-level API and developing my own "middleware" with a
+                bias towards the types of things I want to draw.
+            </p>
+            <p>
+                Thus, <a target="_blank" href="https://github.com/brettonw/webgl.js">WebGL.js</a> was born,
+                a very simple rendering interface. I expect that I will keep coming back
+                to this over many years.
+            </p>
+        </li>
+        <li>
+            <p>
+                While working in the aerospace industry on Space Situational Awareness
+                (SSA) topics, I realized I needed a better understanding of concepts that
+                were everyday to the aerospace engineers. Being a visual guy, I figured
+                I'd make it a visual exploration.
+                <a target="_blank" href="https://github.com/brettonw/astro.js">Astro.js</a> is the
+                manifestation of that.
+            </p>
+            <p>
+                I found it rather challenging to validate my results, so I turned to other
+                sources, including satellite and other imagery from various space missions
+                to compare my images with "real" results. I learned a lot, and want to
+                continue exploring this domain.
+            </p>
+            <p>
+                Along the way, one of the biggest challenges was the size of the starfield
+                texture. In order to be good quality, I was using a PNG file that was over
+                40Mb. I could have used one of the typical texture compression formats to
+                try to get that smaller, but instead I hunted down the
+                <a target="_blank" href="https://github.com/brettonw/YaleBrightStarCatalog">Yale Bright
+                Star Catalog</a> and converted it to JSON. I used the star temperature
+                information, or the classification if temperature wasn't available, to set
+                the color. This file is MUCH smaller, and I generate geometry for the
+                stars rendered at screen resolution...
+            </p>
+            <p>
+                One thing that I became particular fascinated with was some of the eclipse
+                imagery from the EPIC/DISCOVR mission. Shadows are a particular challenge
+                in Z-buffered rendering (like OpenGL), but in this case with only one
+                occluder, I thought it would be pretty straight-forward. I had some ideas
+                about the math for computing umbra and penumbra analytically, which I
+                explored in <a target="_blank" href="https://github.com/brettonw/circle-area">a
+                circle/circle intersection visualization</a>. I determined a much simpler
+                approximation that was a pretty good fit, which is what I use in the
+                Earth shader. I used the same computations on the Moon shader, so you can
+                explore both solar and lunar eclipses.
+            </p>
+        </li>
+    </ul>
+</body>
+</html>
