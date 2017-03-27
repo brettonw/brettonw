@@ -13,16 +13,7 @@ body {
 	color:rgba(0, 0, 192, 1.0);
 	text-align:center;
     width: 100%;
-    max-width: 1200px;
-    min-width: 300px;
     margin: 0 auto !important;
     float: none !important;
-    box-sizing: border-box;
-}
-
-div {
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
