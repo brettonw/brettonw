@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+# also, to facilitate deployment to s3 on push, add a shell script to
+# .git/hooks/pre-push containing:
+# ./deploy-to-s3
+
+echo "pushing to S3..."
+dotclean.js .
+aws s3 sync . s3://aws-website-brettonw-8xhbv --delete --exclude ".*" --exclude "deploy-to-s3" --exclude "*/.*" --exclude "README.md"

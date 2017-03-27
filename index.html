@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="description" content="Professional presence for Bretton Wade, software architect and visionary engineer.
     Keywords: Java, Javascript" />
-    <link type="text/css" rel="stylesheet" href="stylesheet.css" />
+    <link rel="icon" type="image/png" href="img/favicon.png?v=3"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
     <meta id="myViewport" name="viewport" content="width=900px,user-scalable=yes">
     <script>
         // android phones have linked font scaling for legibility with the display
@@ -22,7 +23,7 @@
 
         var selected = null;
         var selectedOldColor = null;
-		
+
         var clickSection = function (which) {
 			var contentFrame = document.getElementById ("content");
 			if (selected != null) {
@@ -54,7 +55,7 @@
             if (targetIndex >= 0) {
                 target = location.substring (targetIndex + 1);
             }
-			
+
 			// now actually go there
 			if (target.search (/\//) >= 0) {
 				console.log ("New Location: " + window.location.origin + "/" + target);
