@@ -6,4 +6,4 @@
 
 echo "pushing to S3..."
 dotclean.js .
-aws s3 sync . s3://aws-website-brettonw-8xhbv --delete --exclude ".*" --exclude "deploy-to-s3" --exclude "*/.*" --exclude "README.md"
+aws s3 sync --profile "bretton.wade@gmail.com" . s3://aws-website-brettonw-8xhbv --delete --exclude ".*" --exclude "deploy-to-s3" --exclude "*/.*" --exclude "README.md"
