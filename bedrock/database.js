@@ -1,9 +1,10 @@
 let Database = function () {
     let $ = Object.create (null);
 
+    //------------------------------------------------------------------------------------
     // getAllFields - traverses an array of objects to produce an object that contains all
     // the field names, and all the associated values of each field
-    let getAllFields = function (database) {
+    $.getAllFields = function (database) {
         let allFields = {};
         for (let record of database) {
             let fields = Object.keys (record).sort ();
@@ -99,7 +100,7 @@ let Database = function () {
                 }
 
                 // if we match, store the record into the result
-                if (match == true) {
+                if (match === true) {
                     result.push (record);
                 }
             }
@@ -154,15 +155,17 @@ let Database = function () {
             return innerHTML;
         };
 
-        _.init = function (index, fieldKeys, databaseSource, owner) {
-            this.index = index;
-            this.databaseSource = databaseSource;
-            this.owner = owner;
+        _.init = function (parameters) {
+            this.index = parameters.index;
+            this.databaseSource = parameters.databaseSource;
+            this.owner = parameters.owner;
             this.filterField = "";
             this.filterValue = "";
 
             // create the select and editing elements inside the supplied div id
-            document.getElementById ("filterElementContainer" + index).innerHTML = makeControls (index, fieldKeys);
+            document.getElementById ("filterElementContainer" + parameters.index).innerHTML = makeControls (parameters.index, parameters.fieldKeys);
+
+            return this;
         };
 
         _.update = function () {
@@ -172,7 +175,7 @@ let Database = function () {
             let index = this.index;
 
             // rebuild the value select
-            let allFields = getAllFields (this.databaseSource.getDatabase ());
+            let allFields = Database.getAllFields (this.databaseSource.getDatabase ());
             let selectParentDiv = document.getElementById ("filterElementSelectValue" + index).parentElement;
             selectParentDiv.innerHTML = makeSelect ("filterElementSelectValue" + index, (filterField in allFields) ? allFields[filterField] : [], filterValue);
 
@@ -223,10 +226,14 @@ let Database = function () {
             this.update ();
         };
 
-        _.new = function (id, fieldKeys, databaseSource, owner) {
-            let newObject = Object.create (_);
-            newObject.init (id, fieldKeys, databaseSource, owner);
-            return newObject;
+        _.setFieldValue = function (filterField, filterValue) {
+            this.filterField = filterField;
+            this.filterValue = filterValue;
+            document.getElementById ("filterElementTextbox" + this.index).value = "";
+        };
+
+        _.new = function (parameters) {
+            return Object.create (_).init (parameters);
         };
 
         return _;
@@ -236,11 +243,16 @@ let Database = function () {
     $.Filter = function () {
         let _ = Object.create (null);
 
-        _.init = function (database, elementCount, onUpdate) {
-            this.databaseSource = Database.Source.new (database);
-            this.elementCount = elementCount;
-            this.onUpdate = onUpdate;
-            this.fieldKeys = Object.keys (getAllFields (database)).sort ();
+        _.init = function (parameters) {
+            this.databaseSource = Database.Source.new (parameters.database);
+            this.elementCount = parameters.elementCount;
+            this.onUpdate = parameters.onUpdate;
+            let initialValues = ((typeof parameters.initialValues) !== "undefined") ? parameters.initialValues : [];
+            for (let i = initialValues.length; i < this.elementCount; ++i) {
+                initialValues.push ({ "field": "", "value": "" });
+            }
+            this.initialValues = initialValues;
+            this.fieldKeys = Object.keys (Database.getAllFields (parameters.database)).sort ();
             return this.reset ();
         };
 
@@ -307,14 +319,20 @@ let Database = function () {
 
             this.filters = [];
             for (let index = 0; index < this.elementCount; ++index) {
-                this.filters.push (Database.FilterElement.new (index, this.fieldKeys, (index > 0) ? this.filters[index - 1] : this.databaseSource, this));
+                this.filters.push (Database.FilterElement.new ({
+                    "index": index,
+                    "fieldKeys": this.fieldKeys,
+                    "initialValue": this.initialValues[index],
+                    "databaseSource": (index > 0) ? this.filters[index - 1] : this.databaseSource,
+                    "owner": this
+                }));
             }
 
             return this.update ();
         };
 
-        _.new = function (database, elementCount, onUpdate) {
-            return Object.create (_).init (database, elementCount, onUpdate);
+        _.new = function (parameters) {
+            return Object.create (_).init (parameters);
         };
 
         return _;
@@ -327,7 +345,7 @@ let Database = function () {
 // make the whole thing re-entrant?
 let theFilter;
 let makeFilter = function (db, elementCount, onUpdate) {
-    theFilter = Database.Filter.new (db, elementCount, onUpdate);
+    theFilter = Database.Filter.new ({"database": db, "elementCount": elementCount, "onUpdate": onUpdate });
 };
 
 let SimpleDatabase = function () {
@@ -435,6 +453,7 @@ let SimpleDatabase = function () {
         // the items are equivalent
         return 0;
     };
+
     /**
      *
      * @param records
