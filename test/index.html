@@ -55,7 +55,18 @@
         makeFilter(database, 6, function (db) {
             let innerHTML = "";
             for (let record of db) {
-                innerHTML += div ("databaseLine", "RA: " + record.RA + ", Dec: " + record.Dec);
+                let recordHTML = "";
+                let keys = Object.keys(record).sort ();
+                let first = true;
+                for (let key of keys) {
+                    if (! first) {
+                        recordHTML += ", "
+                    } else {
+                        first = false;
+                    }
+                    recordHTML += "\"" + key + "\": \"" + record[key] + "\"";
+                }
+                innerHTML += div ("databaseLine", recordHTML);
             }
             document.getElementById("databaseDisplay").innerHTML = innerHTML;
         });
