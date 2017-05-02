@@ -134,9 +134,9 @@ let Database = function () {
             return innerHTML;
         };
 
-        let makeControls = function (index, fieldKeys) {
+        let makeControls = function (index, field, value, fieldKeys) {
             let innerHTML =
-                div ("filterElementDiv", makeSelect ("filterElementSelectKey" + index, fieldKeys, ""))
+                div ("filterElementDiv", makeSelect ("filterElementSelectKey" + index, fieldKeys, field))
                 + div ("filterElementDiv", block ("input", {
                     "class": "filterElementTextbox",
                     "type": "text",
@@ -146,7 +146,7 @@ let Database = function () {
                     //"disabled": "disabled",
                     "value": ""
                 }, ""))
-                + div ("filterElementDiv", makeSelect ("filterElementSelectValue" + index, [], ""))
+                + div ("filterElementDiv", makeSelect ("filterElementSelectValue" + index, [], value))
                 + block ("div", {
                     "id": "filterElementCountDiv" + index,
                     "class": "filterElementCountDiv"
@@ -159,11 +159,11 @@ let Database = function () {
             this.index = parameters.index;
             this.databaseSource = parameters.databaseSource;
             this.owner = parameters.owner;
-            this.filterField = "";
-            this.filterValue = "";
+            this.filterField = parameters.initialValue.field;
+            this.filterValue = parameters.initialValue.value;
 
             // create the select and editing elements inside the supplied div id
-            document.getElementById ("filterElementContainer" + parameters.index).innerHTML = makeControls (parameters.index, parameters.fieldKeys);
+            document.getElementById ("filterElementContainer" + parameters.index).innerHTML = makeControls (parameters.index, this.filterField, this.filterValue, parameters.fieldKeys);
 
             return this;
         };
@@ -249,7 +249,11 @@ let Database = function () {
             this.onUpdate = parameters.onUpdate;
             let initialValues = ((typeof parameters.initialValues) !== "undefined") ? parameters.initialValues : [];
             for (let i = initialValues.length; i < this.elementCount; ++i) {
-                initialValues.push ({ "field": "", "value": "" });
+                initialValues.push ({});
+            }
+            for (let initialValue of initialValues) {
+                initialValue.field = ("field" in initialValue) ? initialValue.field : "";
+                initialValue.value = ("value" in initialValue) ? initialValue.value : "";
             }
             this.initialValues = initialValues;
             this.fieldKeys = Object.keys (Database.getAllFields (parameters.database)).sort ();
@@ -270,9 +274,9 @@ let Database = function () {
                     ++index;
                 }
                 if (index < length) {
-                    document.getElementById ("filterElementContainer" + index).style.visibility = "visible";
+                    document.getElementById ("filterElementContainer" + index).style.display = "inline-block";
                     while (++index < length) {
-                        document.getElementById ("filterElementContainer" + index).style.visibility = "hidden";
+                        document.getElementById ("filterElementContainer" + index).style.display = "none";
                     }
                 }
 
@@ -302,19 +306,22 @@ let Database = function () {
         };
 
         _.reset = function () {
-            // create the select and editing elements, starting with the clear button
-            let filterArrayContainerHTML = block ("button", {
-                "class": "filterClearButton",
-                "type": "button",
-                "onclick": "theFilter.reset ();"
-            }, "CLEAR");
-
+            // create the select and editing elements
+            let filterArrayContainerHTML = "";
             for (let index = 0; index < this.elementCount; ++index) {
                 filterArrayContainerHTML += block ("div", {
                     "class": "filterElementContainer",
                     "id": "filterElementContainer" + index
                 }, "");
             }
+
+            // drop in the clear button
+            filterArrayContainerHTML += div ("filterElementContainer", block ("button", {
+                "class": "filterClearButton",
+                "type": "button",
+                "onclick": "theFilter.reset ();"
+            }, "CLEAR"));
+
             document.getElementById ("filterContainer").innerHTML = filterArrayContainerHTML;
 
             this.filters = [];
@@ -344,8 +351,8 @@ let Database = function () {
 // I'd like a better way to do this than exposing a global variable - is it possible to
 // make the whole thing re-entrant?
 let theFilter;
-let makeFilter = function (db, elementCount, onUpdate) {
-    theFilter = Database.Filter.new ({"database": db, "elementCount": elementCount, "onUpdate": onUpdate });
+let makeFilter = function (parameters) {
+    theFilter = Database.Filter.new (parameters);
 };
 
 let SimpleDatabase = function () {
