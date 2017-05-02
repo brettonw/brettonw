@@ -296,20 +296,35 @@ let Database = function () {
             return this.filters[this.filters.length - 1].getDatabase ();
         };
 
-        _.setInitialValues = function (initialValues) {
-            if (typeof initialValues === "undefined") {
-                initialValues = [];
+        let conditionValues = function (values, elementCount) {
+            if (typeof values === "undefined") {
+                values = [];
             }
 
-            for (let i = initialValues.length; i < this.elementCount; ++i) {
-                initialValues.push ({});
+            for (let i = values.length; i < elementCount; ++i) {
+                values.push ({});
             }
-            for (let initialValue of initialValues) {
-                initialValue.field = ("field" in initialValue) ? initialValue.field : "";
-                initialValue.value = ("value" in initialValue) ? initialValue.value : "";
+            for (let value of values) {
+                value.field = ("field" in value) ? value.field : "";
+                value.value = ("value" in value) ? value.value : "";
             }
-            this.initialValues = initialValues;
+            return values;
+        };
+
+        _.setInitialValues = function (initialValues) {
+            this.initialValues = conditionValues (initialValues, this.elementCount);
             return this.reset ();
+        };
+
+        _.setValues = function (values) {
+            let elementCount = this.elementCount;
+            let filters = this.filters;
+            values = conditionValues(values, elementCount);
+            for (let i = 0; i < elementCount; ++i) {
+                filters[i].filterField = values[i].field;
+                filters[i].filterValue = values[i].value;
+            }
+            return this.update();
         };
 
         _.reset = function () {
