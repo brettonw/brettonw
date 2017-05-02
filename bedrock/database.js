@@ -243,12 +243,28 @@ let Database = function () {
     $.Filter = function () {
         let _ = Object.create (null);
 
+        let conditionValues = function (values, elementCount) {
+            if (typeof values === "undefined") {
+                values = [];
+            }
+
+            for (let i = values.length; i < elementCount; ++i) {
+                values.push ({});
+            }
+            for (let value of values) {
+                value.field = ("field" in value) ? value.field : "";
+                value.value = ("value" in value) ? value.value : "";
+            }
+            return values;
+        };
+
         _.init = function (parameters) {
             this.databaseSource = Database.Source.new (parameters.database);
             this.elementCount = parameters.elementCount;
             this.onUpdate = parameters.onUpdate;
             this.fieldKeys = Object.keys (Database.getAllFields (parameters.database)).sort ();
-            return this.setInitialValues(parameters.initialValues);
+            this.initialValues = conditionValues (parameters.initialValues, parameters.elementCount);
+            return this.reset ();
         };
 
         _.push = function (index) {
@@ -294,26 +310,6 @@ let Database = function () {
 
         _.getDatabase = function () {
             return this.filters[this.filters.length - 1].getDatabase ();
-        };
-
-        let conditionValues = function (values, elementCount) {
-            if (typeof values === "undefined") {
-                values = [];
-            }
-
-            for (let i = values.length; i < elementCount; ++i) {
-                values.push ({});
-            }
-            for (let value of values) {
-                value.field = ("field" in value) ? value.field : "";
-                value.value = ("value" in value) ? value.value : "";
-            }
-            return values;
-        };
-
-        _.setInitialValues = function (initialValues) {
-            this.initialValues = conditionValues (initialValues, this.elementCount);
-            return this.reset ();
         };
 
         _.setValues = function (values) {
