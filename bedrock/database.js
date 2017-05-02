@@ -144,7 +144,7 @@ let Database = function () {
                     "onkeypress": "if (event.keyCode == 13) { theFilter.onEnterKey (this) };",
                     "oninput": "theFilter.onValueChange (this);",
                     //"disabled": "disabled",
-                    "value": ""
+                    "value": value
                 }, ""))
                 + div ("filterElementDiv", makeSelect ("filterElementSelectValue" + index, [], value))
                 + block ("div", {
