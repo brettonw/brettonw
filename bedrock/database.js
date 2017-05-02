@@ -213,21 +213,21 @@ let Database = function () {
             return this.filteredDatabase;
         };
 
-        _.setFilterField = function (filterField) {
+        _.setFilterField = function (filterField, shouldUpdate) {
             this.filterField = filterField;
             this.filterValue = "";
             document.getElementById ("filterElementTextbox" + this.index).value = "";
-
             this.update ();
         };
 
-        _.setFilterValue = function (filterValue) {
+        _.setFilterValue = function (filterValue, shouldUpdate) {
             this.filterValue = filterValue;
             this.update ();
         };
 
         _.setFieldValue = function (filterField, filterValue) {
             this.filterField = filterField;
+            document.getElementById ("filterElementSelectKey" + this.index).value = filterField;
             this.filterValue = filterValue;
             document.getElementById ("filterElementTextbox" + this.index).value = "";
         };
@@ -317,8 +317,7 @@ let Database = function () {
             let filters = this.filters;
             values = conditionValues(values, elementCount);
             for (let i = 0; i < elementCount; ++i) {
-                filters[i].filterField = values[i].field;
-                filters[i].filterValue = values[i].value;
+                filters[i].setFieldValue(values[i].field, values[i].value);
             }
             return this.update();
         };
