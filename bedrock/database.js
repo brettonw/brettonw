@@ -247,17 +247,8 @@ let Database = function () {
             this.databaseSource = Database.Source.new (parameters.database);
             this.elementCount = parameters.elementCount;
             this.onUpdate = parameters.onUpdate;
-            let initialValues = ((typeof parameters.initialValues) !== "undefined") ? parameters.initialValues : [];
-            for (let i = initialValues.length; i < this.elementCount; ++i) {
-                initialValues.push ({});
-            }
-            for (let initialValue of initialValues) {
-                initialValue.field = ("field" in initialValue) ? initialValue.field : "";
-                initialValue.value = ("value" in initialValue) ? initialValue.value : "";
-            }
-            this.initialValues = initialValues;
             this.fieldKeys = Object.keys (Database.getAllFields (parameters.database)).sort ();
-            return this.reset ();
+            return this.setInitialValues(parameters.initialValues);
         };
 
         _.push = function (index) {
@@ -303,6 +294,22 @@ let Database = function () {
 
         _.getDatabase = function () {
             return this.filters[this.filters.length - 1].getDatabase ();
+        };
+
+        _.setInitialValues = function (initialValues) {
+            if (typeof initialValues === "undefined") {
+                initialValues = [];
+            }
+
+            for (let i = initialValues.length; i < this.elementCount; ++i) {
+                initialValues.push ({});
+            }
+            for (let initialValue of initialValues) {
+                initialValue.field = ("field" in initialValue) ? initialValue.field : "";
+                initialValue.value = ("value" in initialValue) ? initialValue.value : "";
+            }
+            this.initialValues = initialValues;
+            return this.reset ();
         };
 
         _.reset = function () {
