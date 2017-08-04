@@ -10,6 +10,8 @@ html {
 
 body {
     font-family:sans-serif;
+    font-size: 0.875em;
+    font-weight: 200;
 	color:rgba(0, 0, 192, 1.0);
 	text-align:left;
     width: 100%;
@@ -17,6 +19,7 @@ body {
     margin: 0 auto !important;
     float: none !important;
     padding:10px;
+    overflow-y:scroll;
 }
 
 p {
