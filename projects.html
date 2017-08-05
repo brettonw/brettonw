@@ -38,6 +38,9 @@
             a very simple rendering interface. I expect that I will keep coming back
             to this over many years.
         </p>
+        <div style="text-align:center;">
+            <img src="projects/webgl.png" class="inline-img"></img>
+        </div>
     </div>
     <h2>Astro</h2>
     <div class="container">
@@ -49,6 +52,17 @@
             <a target="_blank" href="https://github.com/brettonw/astro.js">Astro.js</a> is the
             manifestation of that, built using the aforementioned WebGL.js library.
         </p>
+        <div style="text-align:center;">
+            <img src="projects/astro.png" class="inline-img"></img>
+        </div>
+        <p>
+            The model includes <a target="_blank" href="https://en.wikipedia.org/wiki/World_Geodetic_System">WGS-84</a> planetary
+            geometry with "real" day and night textures assembled from NASA's Blue Marble
+            project, cloud textures based on GEOS satellite infrared imagery, and
+            physically based approximations of the atmospheric affect on the appearance of
+            the Earth to an outside observer. I added a variety of cameras to the scene to
+            look at the Earth-Moon-Sol system in a variety of new ways.
+        </p>
         <p>
             I found it rather challenging to validate my results, so I turned to other
             sources, including satellite and other imagery from various space missions
@@ -56,28 +70,43 @@
             continue exploring this domain.
         </p>
         <p>
-            Along the way, one of the biggest challenges was the size of the starfield
-            texture. In order to be good quality, I was using a PNG file that was over
+            Another challenge I encountered was the size of the starfield
+            texture I was using. In order to be good quality, I was using a PNG file that was over
             40Mb. I could have used one of the typical texture compression formats to
             try to get that smaller, but instead I hunted down the
             <a target="_blank" href="https://github.com/brettonw/YaleBrightStarCatalog">Yale Bright
                 Star Catalog</a> and converted it to JSON. I used the star temperature
             information, or the classification if temperature wasn't available, to set
             the color. This file is MUCH smaller, and I generate geometry for the
-            stars rendered at screen resolution...
+            stars rendered at screen resolution. Note that it does not include Nebula or other
+            Messier objects, of which a few are significant members of prominent constellations.
         </p>
+        <div style="text-align:center;">
+            <img src="projects/stars.png" class="inline-img"></img>
+        </div>
         <p>
-            One thing that I became particular fascinated with was some of the eclipse
-            imagery from the EPIC/DISCOVR mission. Shadows are a particular challenge
+            I became fascinated with some of the eclipse
+            imagery from the
+            <a target="_blank" href="https://epic.gsfc.nasa.gov/">EPIC/DISCOVR</a>
+            mission. Shadows are a challenge
             in Z-buffered rendering (like OpenGL), but in this case with only one
             occluder, I thought it would be pretty straight-forward. I had some ideas
             about the math for computing umbra and penumbra analytically, which I
             explored in <a target="_blank" href="https://github.com/brettonw/circle-area">a
-            circle/circle intersection visualization</a>. I determined a much simpler
-            approximation that was a pretty good fit, which is what I use in the
-            Earth shader. I used the same computations on the Moon shader, so you can
-            explore both solar and lunar eclipses.
+            circle/circle intersection visualization</a>.
         </p>
+        <div style="text-align:center;">
+            <img src="projects/circle-circle.png" class="inline-img"></img>
+        </div>
+        <p>
+            Using the circle intersection visualization, I determined a much simpler
+            approximation that was a pretty good fit, which is what I use in the Earth
+            shader. I used the same computations on the Moon shader, so you can explore
+            both solar and lunar eclipses.
+        </p>
+        <div style="text-align:center;">
+            <img src="projects/eclipse.png" class="inline-img"></img>
+        </div>
     </div>
     <h2>Epidimiology</h2>
     <div class="container">
@@ -102,9 +131,19 @@
             simulation is validated by the fact that it exhibits many of the classic
             population-level phenomena.
         </p>
+        <div style="text-align:center;">
+            <img src="projects/transmission.png" class="inline-img"></img>
+        </div>
         <p>
             The simulation is built in pure Javascript using charting tools and
             tree-visualization tools available on GitHub (which I also wrote).
+        </p>
+    </div>
+    <h2>Bedrock</h2>
+    <div class="container">
+        <p>
+            For many years I've been using a bit of code I developed to quickly prototype
+            micro-services written in Java on a Tomcat platform...
         </p>
     </div>
 </div>
