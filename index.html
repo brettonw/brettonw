@@ -15,20 +15,19 @@
         let selectedOldColor = null;
 
         let clickSection = function (which) {
-			var contentFrame = document.getElementById ("content");
-			if (selected != null) {
-				selected.style.color = selectedOldColor;
-				selected.style.textDecoration = "none";
-			}
-			selected = which;
-			//console.log ("Load: " + selected.innerHTML.toLowerCase () + ".html");
-			var name = selected.id.toLowerCase ();
-			//name = name.substring (0, name.indexOf("<br>")).trim ();
-			contentFrame.src = name + ".html?v=20160128";
-            contentFrame.style.overflowY = "scroll";
+            var contentFrame = document.getElementById ("content");
+            if (selected != null) {
+                selected.style.color = selectedOldColor;
+                selected.style.textDecoration = "none";
+            }
+            selected = which;
+            //console.log ("Load: " + selected.innerHTML.toLowerCase () + ".html");
+            var name = selected.id.toLowerCase ();
+            //name = name.substring (0, name.indexOf("<br>")).trim ();
+            contentFrame.src = name + ".html?v=20160128";
             selectedOldColor = selected.style.color;
-			selected.style.color = "blue";
-			selected.style.textDecoration = "underline";
+            selected.style.color = "blue";
+            selected.style.textDecoration = "underline";
         }
 
         let ready = function () {
@@ -40,17 +39,17 @@
                 target = location.substring (targetIndex + 1);
             }
 
-			// now actually go there
-			if (target.search (/\//) >= 0) {
-				console.log ("New Location: " + window.location.origin + "/" + target);
-				window.location.assign(window.location.origin + "/" + target)
-			} else {
-				if (document.getElementById (target) == null) {
-					target = "home";
-				}
-				console.log ("Target: " + target);
-				clickSection (document.getElementById (target));
-			}
+            // now actually go there
+            if (target.search (/\//) >= 0) {
+                console.log ("New Location: " + window.location.origin + "/" + target);
+                window.location.assign(window.location.origin + "/" + target)
+            } else {
+                if (document.getElementById (target) == null) {
+                    target = "home";
+                }
+                console.log ("Target: " + target);
+                clickSection (document.getElementById (target));
+            }
         }
     </script>
 </head>
