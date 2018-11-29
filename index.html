@@ -2,19 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Professional presence for Bretton Wade, software architect and visionary engineer.
-    Keywords: Java, Javascript" />
+    <meta name="description" content="Professional presence for Bretton Wade, software architect and visionary engineer.">
+    <meta name="keywords" content="Java,Javascript,C++,C#,Perl,AWS,Tomcat,MongoDb,SQL,Swift,Simulation,Visualization,analysis,data" />
     <link rel="icon" type="image/png" href="img/favicon.png?3"/>
     <link type="text/css" rel="stylesheet" href="css/style.css?3" />
     <meta id="myViewport" name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes"/>
     <title>Bretton Wade</title>
     <script>
-        let target = "xxx";
+        var target = "xxx";
 
-        let selected = null;
-        let selectedOldColor = null;
+        var selected = null;
+        var selectedOldColor = null;
 
-        let clickSection = function (which) {
+        var clickSection = function (which) {
             var contentFrame = document.getElementById ("content");
             if (selected != null) {
                 selected.style.color = selectedOldColor;
@@ -28,9 +28,9 @@
             selectedOldColor = selected.style.color;
             selected.style.color = "blue";
             selected.style.textDecoration = "underline";
-        }
+        };
 
-        let ready = function () {
+        var ready = function () {
             // determine what page should load
             console.log ("URL: " + window.location);
             var location = new String (window.location);
@@ -50,7 +50,7 @@
                 console.log ("Target: " + target);
                 clickSection (document.getElementById (target));
             }
-        }
+        };
     </script>
 </head>
 <body id="body" onload = "ready ();">
@@ -68,7 +68,7 @@
         <p style="font-size:0.75em; margin:0px; margin-top:5px;"><a style="color:blue;text-decoration:none;" href="mailto:bretton.wade@gmail.com">bretton.wade@gmail.com</a></p>
     </div>
     <div style="margin:0; margin-top:5px; border:none; padding:0; font-size:0.75em; color:rgba(0, 0, 192, 1.0); width:100%;">
-        <div style="width:100%; vertical-align:top;">&copy;1996-2017 Bretton Wade, All Rights Reserved.</div>
+        <div style="width:100%; vertical-align:top;">&copy;1996-2018 Bretton Wade, All Rights Reserved.</div>
         <!--
         None of the browsers work right with these three items totalling
         700 pixels, so it has to be a little bit less... IE in particular
