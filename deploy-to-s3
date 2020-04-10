@@ -6,7 +6,7 @@
 
 echo "pushing to S3..."
 dotclean.js .
-aws s3 sync --profile "bretton.wade@gmail.com" . s3://aws-website-brettonw-8xhbv --delete --exclude "*" --include "*.html" --include "github/*" --include "css/*" --include "js/*" --include "img/*" --include "projects/*" --include "musings/*" --acl public-read
+aws s3 sync --profile "bretton.wade@gmail.com" . s3://aws-website-brettonw-8xhbv --delete --exclude "*" --include "*.html" --include "github/*" --include "css/*" --include "js/*" --include "img/*" --include "projects/*" --include "musings/*" --include "turnips/*" --acl public-read
 
 
 echo "invalidating distribution to force cache refresh...";
