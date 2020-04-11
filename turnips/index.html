@@ -13,13 +13,22 @@
 <body>
 <h1>Turnip Prices in Animal Crossing</h1>
 
-<div class="para">The original source for this project is <a target="_blank" href="https://gist.github.com/Treeki/85be14d297c80c8b3c0a76375743325b">Treeki/TurnipPrices.cpp</a>, which appears to be a disassembled version of the actual game source.</div>
+<div class="para">I was curious about the economy in Animal Crossing New Horizons, and how the stalk market works. The inspiration for this project is <a target="_blank" href="https://gist.github.com/Treeki/85be14d297c80c8b3c0a76375743325b">Treeki/TurnipPrices.cpp</a>, which appears to be a disassembled version of the actual game source.</div>
 
-<div class="para">If I was going to pursue this further, I would use this code to generate a large number of exemplars and train a neural network to recognize the individual patterns.</div>
+<div class="para">If that is indeed the actual source of the game, then we can make a few observations that a lot of people ask. The first is that the price of turnips is not responding to any external stimuli, i.e. there is nothing you can do to affect it. The pattern is computed once at the beginning of the week, and doesn't change until the next week. This also means that there is possibly some merit to identifying what pattern your market is in to maximize your profit opportunity. There are several online tools meant to help with this, so I won't explore that avenue much further.</div>
+
+<div id="averagePriceDiv" class="plotShell"></div>
+
+<div class="para">I extracted the algorithmic portion of the code and broke it into two pieces: the turnip price calculator, and the pattern sequencer. I punted the random number code and used the Javascript random number generators with a few helpers. This may mean there is some variation in behavior from this code to the real game. However, on cursory examination of the code in the above-mentioned disassembly, it looks substantially like a random number generator with all of the normally desired characteristics. Taken together with the fact that this is used to run an economy, I think it's unlikely there is some special characteristics that we will miss. I presume the Javascript random number generator is a good enough proxy to allow some analysis of the functions' behaviors.</div>
+
+<div class="para">Using the two pieces of code, this web page samples each pattern 1,000,000 times and computes the average. It similarly samples the pattern sequencer 1,000,000 times to glean information about the relative distribution of the patterns over time. These two values are combined to get the Overall Average.</div>
+
+<div class="para">Some of the characteristics of this code match the empirically observed aspects of the stalk market, namely the 4 patterns, and their relative frequencies. This provides at least anecdotal confirmation that the results are accurate.</div>
+
+<div class="para">If I was going to pursue this further, I would use this code to generate a large number of exemplars and train a neural network to recognize the individual patterns in-game. However...</div>
 
 <div class="para">My assessment for a single player is that whatever price you buy at on Sunday, sell on Tuesday afternoon for the best overall return of about 10%. But really, don't bother with that at all - go online to the <a target="_blank" href="https://turnip.exchange">Turnip Exchange</a> website and find a friend in Pattern 1 where the Turnip prices are 500+ Bells.</div>
 
-<div id="averagePriceDiv" class="plotShell"></div>
 
 <div id="footer">
     <a target="_blank" href="https://github.com/brettonw/TurnipMarket" style="float:right;text-decoration:none;font-family:sans-serif;font-size:14px;color:blue;">... on GitHub</a>
