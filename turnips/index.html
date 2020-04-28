@@ -6,7 +6,7 @@
     <title>Turnip Price Simulator</title>
     <link rel="stylesheet" href="https://bedrock.brettonw.com/dist/latest/bedrock.css"/>
     <link rel="stylesheet" href="index.css"/>
-    <link rel="stylesheet" href="plot-svg.css" />
+    <link rel="stylesheet" type="text/css" href="https://brettonw.github.io/plot-svg.js/plot-svg.css" />
     <link rel="icon" type="image/png" href="turnip.png"/>
 </head>
 
@@ -44,7 +44,7 @@
 </body>
 </html>
 
-<script src="plot-svg.js"></script>
+<script src="https://brettonw.github.io/plot-svg.js/plot-svg.js"></script>
 <script src="TurnipPrices.js"></script>
 <script>
     function numberWithCommas(x) {
@@ -120,7 +120,7 @@
 
         // set the average plot
         let divElement = document.getElementById("averagePriceDiv");
-        let svg = PlotSvg.multipleLine("Average Turnip Price for " + numberWithCommas (samples) + " Weeks", "Time", "Turnip Price in Bells", plotDataArray, legend);
+        let svg = PlotSvg.setLegendPosition(540, 300).multipleLine("Average Turnip Price for " + numberWithCommas (samples) + " Weeks", "Time", "Turnip Price in Bells", plotDataArray, legend);
         //divElement.style.width = "200px";
         divElement.style.height = (divElement.offsetWidth / 2) + "px";
         divElement.innerHTML = svg;
