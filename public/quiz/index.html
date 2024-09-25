@@ -16,6 +16,11 @@
         align-items: center;
     }
 
+    #outer {
+        width: 95%;
+        height: 80%;
+    }
+
     #container {
         display: flex;
         flex-direction: row;
@@ -96,7 +101,7 @@
         height: 100%;
     }
     </style>
-<body><div id="container"><div id="word" class="square"><div id="correct" class="outlined correct">0</div><div id="level" class="outlined level">0</div><div id="word-content" class="outlined big"></div></div><div id="buttons" class="square gridbox"></div></div></body>
+<body><div id="outer"><div id="container"><div id="word" class="square"><div id="correct" class="outlined correct">0</div><div id="level" class="outlined level">0</div><div id="word-content" class="outlined big"></div></div><div id="buttons" class="square gridbox"></div></div></div></body>
 <audio id="correctSound" src="sounds/correct.mp3" preload="auto"></audio>
 <audio id="wrongSound" src="sounds/wrong.mp3" preload="auto"></audio>
 <script type="module" src="modules/index.mjs"></script>

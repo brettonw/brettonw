@@ -43,7 +43,7 @@ let maskOffsets = function () {
     return offsets;
 } ();
 
-export let hiragana =
+export let hiraganaLexigraphicalOrder =
     "あいうえお" + // ""
     "かきくけこ" + // "k"
     "さしすせそ" + // "s"
@@ -61,7 +61,7 @@ export let hiragana =
     "ぱぴぷぺぽ"  // "p"
 ;
 
-export let makeHiraganaDictionary = function () {
+let makeHiraganaDictionary = function () {
     let dictionary = {};
     let hiraganaIndex = 0;
     for (let i = 0; i < consonantIndex.length; i++) {
@@ -71,7 +71,7 @@ export let makeHiraganaDictionary = function () {
             if (consonantMask[j] === "x") {
                 let assembly = consonant + vowelIndex[j];
                 if (assembly.length > 0) {
-                    let hiraganaChar = hiragana[hiraganaIndex++];
+                    let hiraganaChar = hiraganaLexigraphicalOrder[hiraganaIndex++];
                     let hiraganaName = (assembly in synonyms) ? synonyms[assembly] + ` (${assembly})` : assembly;
                     dictionary[hiraganaChar] = hiraganaName;
                 }
@@ -80,3 +80,19 @@ export let makeHiraganaDictionary = function () {
     }
     return dictionary;
 };
+
+export let hiraganaDictionary = makeHiraganaDictionary();
+
+let getHiraganaByFrequency = function () {
+    // this frequency was derived from a japanese language news site, about 8MB of text
+    let ordered = "う,ん,い,か,に,の,く,と,し,は,た,ち,き,こ,て,さ,つ,な,せ,が,る,ろ,け,を,ど,よ,ぜ,で,り,お,ら,ご,じ,す,あ,も,だ,きゅ,め,ま,れ,え,きょ,しょ,しゅ,ほ,そ,ちょ,み,ね,ひ,げ,わ,ふ,ぶ,じょ,しゃ,ぎ,や,ン,りょ,ば,ぱ,ル,ス,ぎょ,べ,ざ,む,ト,び,イ,じゅ,へ,ちゅ,ゆ,ぽ,ぞ,ぼ,ラ,フ,ク,ひょ,ド,ず,にゅ,リ,ぐ,レ,づ,ア,タ,ぴょ,コ,ポ,マ,ム,エ,ビ,ロ,バ,プ,ウ,テ,ナ,チ,メ,カ,オ,デ,サ,ハ,ベ,ダ,ジ,ブ,シ,ソ,セ,ミ,りゅ,ニ,ちゃ,ネ,パ,グ,ズ,ノ,ワ,ショ,ぺ,ペ,キ,ケ,きゃ,ガ,ニュ,ジョ,ツ,モ,びょ,ホ,ゴ,ジャ,みょ,ぷ,ゼ,ピ,ユ,じゃ,ボ,ぬ,ヘ,ヤ,シャ,ザ,ぴ,ヒ,キャ,ひゃ,シュ,ミュ,ギ,ジュ,ビュ,ピュ,ぢ,ヌ,チャ,チュ,りゃ,ゲ,ヨ,ヲ,キュ,みゃ,ぢょ,にょ,ぎゃ,ゾ,キョ,ヒャ,ヒュ,ヒュ,ヒョ,ミャ,みゅ,ミョ,ぢゃ,X,ぢゅ,X,X,チョ,リャ,リュ,リョ,びゃ,ビャ,びゅ,ビョ,にゃ,ニャ,ニョ,ギャ,ぎゅ,ギュ,ギョ,ぴゃ,ピャ,ピュ,ピョ,ヂ,ヅ".split(",");
+    let output = "";
+    for (let syllable of ordered) {
+        if (syllable in hiraganaDictionary) {
+            output += syllable;
+        }
+    }
+    return output;
+};
+
+export let hiraganaFrequencyOrder = getHiraganaByFrequency ();
