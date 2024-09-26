@@ -117,6 +117,7 @@ export let Quiz = function () {
             quizValue = tmp;
         }
         this.wordElement.innerHTML = quizKey;
+        this.wordElement.style.fontSize = (quizKey.length == 1) ? "20vh" : (quizKey.length > 4) ? "10vh" : "15vh";
         this.quiz = { index: quizIndex, key: quizKey, value: quizValue};
 
         console.log(Object.keys(this.known));
