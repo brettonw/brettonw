@@ -16,14 +16,38 @@
 
 import {randomInt} from "./utility.mjs";
 
-export let Quiz = function () {
+let Base = function () {
     let _ = Object.create (null);
 
-    // create and initialize a new quiz object
+    // create and initialize a new Base object
     _.new = function (parameters) {
         let instance = Object.create (this);
         return instance.init(parameters);
     };
+
+    return _;
+} ();
+
+let QuizKey = function () {
+    let _ = Object.create (Base);
+
+    _.init = function (parameters) {
+        this.index = randomInt(parameters.level);
+        if (!(this.flipped = (randomInt(2) === 1))) {
+            this.key = parameters.keys[this.index];
+            this.value = parameters.dictionary[this.key];
+        } else {
+            this.value = parameters.keys[this.index];
+            this.key = parameters.dictionary[this.value];
+        }
+        return this;
+    };
+
+    return _;
+} ();
+
+export let Quiz = function () {
+    let _ = Object.create (Base);
 
     // initialize a new quiz object
     _.init = function (parameters) {
@@ -73,12 +97,12 @@ export let Quiz = function () {
 
     // when a button in the quiz is clicked...
     _.click = function (button_id) {
-        if (this.quiz.value === this.buttons[button_id].innerHTML) {
+        if (this.quizKey.value === this.buttons[button_id].innerHTML) {
             // celebrate
             this.correctSoundElement.play();
 
-            // set the known flag
-            this.known[this.quiz.value] = true;
+            // set the known flag for this quizkey value
+            this.known[this.quizKey.value] = true;
 
             // check to see if we go to the next level
             if (this.correct++ >= this.target) {
@@ -90,7 +114,7 @@ export let Quiz = function () {
             // womp womp
             this.wrongSoundElement.play();
 
-            // set the backround color on the clicked element to red
+            // set the background color on the clicked element to red
             this.buttons[button_id].style.backgroundColor = "red";
 
             // reset the score
@@ -104,33 +128,33 @@ export let Quiz = function () {
         // possible words
         let coinToss = randomInt(2) === 1;
 
-        // generate a random word index (not the same as the last one...), and get the key and the value
-        let quizIndex = randomInt (this.level);
-        while (quizIndex === this.quiz.index) {
-            quizIndex = randomInt (this.level);
+        // generate a random word index - not the same as the last one, and biased towards the new
+        // values after a level change, and get the key and the value
+        let quizKey;
+        if (Object.keys(this.known).length !== (this.level * 2)) {
+            do {
+                quizKey = QuizKey.new(this);
+            } while (quizKey.value in this.known)
+        } else {
+            do {
+                quizKey = QuizKey.new(this);
+            } while (quizKey.index === this.quizKey.index)
         }
-        let quizKey = this.keys[quizIndex];
-        let quizValue = this.dictionary[quizKey];
-        if (coinToss) {
-            let tmp = quizKey;
-            quizKey = quizValue;
-            quizValue = tmp;
-        }
-        this.wordElement.innerHTML = quizKey;
-        this.wordElement.style.fontSize = (quizKey.length == 1) ? "20vh" : (quizKey.length > 4) ? "10vh" : "15vh";
-        this.quiz = { index: quizIndex, key: quizKey, value: quizValue};
+        this.wordElement.innerHTML = quizKey.key;
+        this.wordElement.style.fontSize = (quizKey.key.length === 1) ? "20vh" : (quizKey.key.length > 4) ? "10vh" : "15vh";
+        this.quizKey = quizKey;
 
         console.log(Object.keys(this.known));
-        console.log(this.quiz);
+        console.log(this.quizKey);
 
         // generate a list of possible definitions
-        let values = [quizValue];
+        let values = [quizKey.value];
         for (let i = 1; i < this.difficulty; ++i) {
             let value;
             do {
                 // generate a possible random value in the range
                 let randomKey = this.keys[randomInt(this.level)];
-                value = coinToss ? randomKey : this.dictionary[randomKey];
+                value = quizKey.flipped ? randomKey : this.dictionary[randomKey];
             } while (values.includes (value));
             values.push (value);
         }
@@ -141,7 +165,7 @@ export let Quiz = function () {
         // set the answers on the buttons, cheat if we should
         for (let i = 0; i < this.difficulty; ++i) {
             this.buttons[i].innerHTML = values[i];
-            this.buttons[i].style.backgroundColor = ((values[i] === quizValue) && !(quizValue in this.known)) ? "rgba(0,255,0,0.5)" : "white";
+            this.buttons[i].style.backgroundColor = ((values[i] === quizKey.value) && !(quizKey.value in this.known)) ? "rgba(0,255,0,0.5)" : "white";
         }
     };
 
@@ -151,11 +175,12 @@ export let Quiz = function () {
     };
 
     _.start = function () {
-        // store the difficulty as the current level and countdown
+        // store the difficulty as the current level and initialize the correct count
         this.level = this.difficulty;
         this.correct = 0;
 
-        this.quiz = { index: -1, key: "", value: ""};
+        // create a fake quizKey for the first time through and set the known to be an empty object
+        this.quizKey = { index: -1, key: "", value: ""};
         this.known = {};
 
         // show the quiz
