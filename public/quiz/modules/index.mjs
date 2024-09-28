@@ -1,4 +1,8 @@
-import {hiraganaLexicographicOrder, hiraganaDictionary, hiraganaFrequencyOrder} from "./japanese.mjs";
+import {
+    hiraganaDictionary, hiraganaLexicographicOrder, hiraganaFrequencyOrder,
+    katakanaDictionary, katakanaLexicographicOrder, katakanaFrequencyOrder
+} from "./japanese.mjs";
+import {J12} from "./j12.mjs";
 import {Quiz} from "./quiz.mjs";
 import {} from "./utility.mjs";
 
@@ -10,15 +14,24 @@ const dictionaryName = urlParams.has("dictionary") ? urlParams.get("dictionary")
 const keysName = urlParams.has("keys") ? urlParams.get("keys") : "random";
 
 const dictionary = {
-    "hiragana": hiraganaDictionary
+    "hiragana": hiraganaDictionary,
+    "katakana": katakanaDictionary,
+    "j12_week1": J12.week1_vocabulary,
+    "j12_week2": J12.week2_vocabulary
 }[dictionaryName];
 
-const keys = {
+const keysDictionary = {
     "hiragana": {
         "lexicographic": hiraganaLexicographicOrder,
         "frequency": hiraganaFrequencyOrder,
-        "random": Array.shuffle (Object.keys (hiraganaDictionary)).reduce ((acc, val) => { return acc + val;},  "")
+        "j12_week1": J12.week1_hiragana,
+        "j12_week2": J12.week2_hiragana
+    },
+    "katakana": {
+        "lexicographic": katakanaLexicographicOrder,
+        "frequency": katakanaFrequencyOrder
     }
-}[dictionaryName][keysName];
+}[dictionaryName] || {};
+const keys = keysName in keysDictionary ? keysDictionary[keysName] : Object.keys (dictionary).shuffle();
 
 Quiz.new ({ difficulty: difficulty, dictionary: dictionary, keys: keys, word: "word-content" }).start();

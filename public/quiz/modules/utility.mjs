@@ -13,3 +13,5 @@ export let shuffleArray = function (array) {
 }
 
 Array.shuffle = shuffleArray;
+Array.prototype.shuffle = function () { return shuffleArray(this); };
+Array.prototype.shuffled = function () { return shuffleArray(...this); };

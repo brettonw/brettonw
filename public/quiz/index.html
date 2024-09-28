@@ -8,106 +8,41 @@
 <style>
     * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Helvetica, Arial, sans-serif;
     }
 
     body, html {
-        margin: 0;
-        padding: 0;
         height: 100%;
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: auto;
     }
-
-    #outer {
-        width: 100%;
-        height: 90%;
-    }
-
-    #container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .square {
-        position: relative;
-        background-color: white;
-        margin: 5px;
-    }
-
-    .outlined {
-        border: lightgray 1px solid;
-        display: flex;
-        justify-content: center; /* horizontally centers the text */
-        align-items: center;     /* vertically centers the text */
-        text-align: center;      /* optional, aligns text within the box */
-        font-family: Helvetica, Arial, sans-serif;
-        font-size: 5vh;
-        width: 100%;
-        height: 100%;
-    }
-
-    .big {
-        font-size: 20vh;
-    }
-
-    .gridbox {
-        display: grid;
-        place-items: center;
-        /*grid-template-rows: repeat(3, 1fr); */ /* Adjust 5 to the number of boxes */
-        gap: 10px;                             /* Space between the boxes */
-    }
-
-    /* for wider layouts, squares side by side */
-    @media (min-aspect-ratio: 1/1) {
-        .square {
-            width: calc((100vw - 20px) * 0.5);
-            height: calc((100vw - 20px) * 0.5);
-        }
-    }
-
-    /* for taller layouts, squares stacked vertically */
-    @media (max-aspect-ratio: 1/1) {
-        .square {
-            width: calc((90vh - 20px) * 0.5);
-            height: calc((90vh - 20px) * 0.5);
-        }
-        #container {
-            flex-direction: column;
-        }
-    }
-
-    .correct {
-        position: absolute; /* absolute relative to .word */
-        top: 10px;
-        left: 10px;
-        width: 100px;
-        height: 36px;
-        background-color: rgba(240, 190, 128, 0.33);
-        font-size: 28px;
-    }
-
-    .level {
-        position: absolute; /* absolute relative to .word */
-        top: 10px;
-        right: 10px;
-        width: 100px;
-        height: 36px;
-        background-color: rgba(173, 216, 230, 0.33);
-        font-size: 28px;
-    }
-
-    #word-content {
-        width: 100%;
-        height: 100%;
-    }
-    </style>
-<body><div id="outer"><div id="container"><div id="word" class="square"><div id="correct" class="outlined correct">0</div><div id="level" class="outlined level">0</div><div id="word-content" class="outlined big"></div></div><div id="buttons" class="square gridbox"></div></div></div></body>
-<audio id="correctSound" src="sounds/correct.mp3" preload="auto"></audio>
-<audio id="wrongSound" src="sounds/wrong.mp3" preload="auto"></audio>
-<script type="module" src="modules/index.mjs"></script>
+</style>
+<body>
+<div>
+    <h2>Hiragana</h2>
+    <ul>
+        <li><a href="quiz.html?difficulty=4&dictionary=hiragana&keys=lexicographic">Hiragana - Lexicographic Order (aiueo)</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=hiragana&keys=frequency">Hiragana - By Frequency Of Use</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=hiragana&keys=random">Hiragana - Random Order</a></li>
+        <li><a href="quiz.html?difficulty=3&dictionary=hiragana&keys=j12_week1">Hiragana - J12 Week 1</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=hiragana&keys=j12_week2">Hiragana - J12 Week 2</a></li>
+    </ul>
+</div>
+<div>
+    <h2>Katakana</h2>
+    <ul>
+        <li><a href="quiz.html?difficulty=4&dictionary=katakana&keys=lexicographic">Katakana - Lexicographic Order (aiueo)</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=katakana&keys=frequency">Katakana - By Frequency Of Use</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=katakana&keys=random">Katakana - Random Order</a></li>
+    </ul>
+</div>
+<div>
+    <h2>Vocabulary</h2>
+    <ul>
+        <li><a href="quiz.html?difficulty=4&dictionary=j12_week1">J12 - Week 1</a></li>
+        <li><a href="quiz.html?difficulty=4&dictionary=j12_week2">J12 - Week 2</a></li>
+    </ul>
+</div>
+</body>
 </html>

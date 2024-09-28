@@ -16,3 +16,5 @@
 - some form of scoring mechanism?
 - better sounds
 - difficulty selection
+- make the keys work with arrays instead of a string
+- include J12

@@ -1,13 +1,14 @@
-let vowelIndex = ["", "a", "i", "u", "e", "o"];
-let consonantIndex = ["", "k", "s", "t", "n", "h", "m", "y", "r", "w", "g", "z", "d", "b", "p"];
-let synonyms = {
+const vowelIndex = ["", "a", "i", "u", "e", "o"];
+const consonantIndex = ["", "k", "s", "t", "n", "h", "m", "y", "r", "w", "g", "z", "d", "b", "p"];
+const synonyms = {
     "si": "shi",
     "ti": "chi", "tu": "tsu",
-    "hu": "fu",
+    "ha": "wa", "hu": "fu",
+    "wo": "o",
     "zi": "ji",
     "di": "dzi", "du": "dzu"
 };
-let consonantMasks = [
+const consonantMasks = [
     " xxxxx", // ""
     " xxxxx", // "k"
     " xxxxx", // "s"
@@ -25,7 +26,7 @@ let consonantMasks = [
     " xxxxx"  // "b"
 ];
 
-export let hiraganaLexicographicOrder =
+export const hiraganaLexicographicOrder =
     "あいうえお" + // ""
     "かきくけこ" + // "k"
     "さしすせそ" + // "s"
@@ -43,9 +44,27 @@ export let hiraganaLexicographicOrder =
     "ぱぴぷぺぽ"  // "p"
 ;
 
-let makeHiraganaDictionary = function () {
+export const katakanaLexicographicOrder =
+    "アイウエオ" + // ""
+    "カキクケコ" + // "k"
+    "サシスセソ" + // "s"
+    "タチツテト" + // "t"
+    "ンナニヌネノ" + // "n"
+    "ハヒフヘホ" + // "h"
+    "マミムメモ" + // "m"
+    "ヤユヨ" + // "y"
+    "ラリルレロ" + // "r"
+    "ワヲ" + // "w"
+    "ガギグゲゴ" + // "g"
+    "ザジズゼゾ" + // "z"
+    "ダヂヅデド" + // "d"
+    "バビブベボ" + // "b"
+    "パピプペポ"  // "p"
+;
+
+let makeDictionary = function (lexicographicOrder) {
     let dictionary = {};
-    let hiraganaIndex = 0;
+    let index = 0;
     for (let i = 0; i < consonantIndex.length; i++) {
         let consonant = consonantIndex[i];
         let consonantMask = consonantMasks[i];
@@ -53,8 +72,8 @@ let makeHiraganaDictionary = function () {
             if (consonantMask[j] === "x") {
                 let assembly = consonant + vowelIndex[j];
                 if (assembly.length > 0) {
-                    let hiraganaChar = hiraganaLexicographicOrder[hiraganaIndex++];
-                    dictionary[hiraganaChar] = (assembly in synonyms) ? synonyms[assembly] + ` (${assembly})` : assembly;
+                    let character = lexicographicOrder[index++];
+                    dictionary[character] = (assembly in synonyms) ? synonyms[assembly] + ` (${assembly})` : assembly;
                 }
             }
         }
@@ -62,18 +81,20 @@ let makeHiraganaDictionary = function () {
     return dictionary;
 };
 
-export let hiraganaDictionary = makeHiraganaDictionary();
+export const hiraganaDictionary = makeDictionary(hiraganaLexicographicOrder);
+export const katakanaDictionary = makeDictionary(katakanaLexicographicOrder);
 
-let getHiraganaByFrequency = function () {
+const ordered = "う,ん,い,か,に,の,く,と,し,は,た,ち,き,こ,て,さ,つ,な,せ,が,る,ろ,け,を,ど,よ,ぜ,で,り,お,ら,ご,じ,す,あ,も,だ,きゅ,め,ま,れ,え,きょ,しょ,しゅ,ほ,そ,ちょ,み,ね,ひ,げ,わ,ふ,ぶ,じょ,しゃ,ぎ,や,ン,りょ,ば,ぱ,ル,ス,ぎょ,べ,ざ,む,ト,び,イ,じゅ,へ,ちゅ,ゆ,ぽ,ぞ,ぼ,ラ,フ,ク,ひょ,ド,ず,にゅ,リ,ぐ,レ,づ,ア,タ,ぴょ,コ,ポ,マ,ム,エ,ビ,ロ,バ,プ,ウ,テ,ナ,チ,メ,カ,オ,デ,サ,ハ,ベ,ダ,ジ,ブ,シ,ソ,セ,ミ,りゅ,ニ,ちゃ,ネ,パ,グ,ズ,ノ,ワ,ショ,ぺ,ペ,キ,ケ,きゃ,ガ,ニュ,ジョ,ツ,モ,びょ,ホ,ゴ,ジャ,みょ,ぷ,ゼ,ピ,ユ,じゃ,ボ,ぬ,ヘ,ヤ,シャ,ザ,ぴ,ヒ,キャ,ひゃ,シュ,ミュ,ギ,ジュ,ビュ,ピュ,ぢ,ヌ,チャ,チュ,りゃ,ゲ,ヨ,ヲ,キュ,みゃ,ぢょ,にょ,ぎゃ,ゾ,キョ,ヒャ,ヒュ,ヒュ,ヒョ,ミャ,みゅ,ミョ,ぢゃ,X,ぢゅ,X,X,チョ,リャ,リュ,リョ,びゃ,ビャ,びゅ,ビョ,にゃ,ニャ,ニョ,ギャ,ぎゅ,ギュ,ギョ,ぴゃ,ピャ,ピュ,ピョ,ヂ,ヅ".split(",");
+let getByFrequency = function (dictionary) {
     // this frequency was derived from a japanese language news site, about 8MB of text
-    let ordered = "う,ん,い,か,に,の,く,と,し,は,た,ち,き,こ,て,さ,つ,な,せ,が,る,ろ,け,を,ど,よ,ぜ,で,り,お,ら,ご,じ,す,あ,も,だ,きゅ,め,ま,れ,え,きょ,しょ,しゅ,ほ,そ,ちょ,み,ね,ひ,げ,わ,ふ,ぶ,じょ,しゃ,ぎ,や,ン,りょ,ば,ぱ,ル,ス,ぎょ,べ,ざ,む,ト,び,イ,じゅ,へ,ちゅ,ゆ,ぽ,ぞ,ぼ,ラ,フ,ク,ひょ,ド,ず,にゅ,リ,ぐ,レ,づ,ア,タ,ぴょ,コ,ポ,マ,ム,エ,ビ,ロ,バ,プ,ウ,テ,ナ,チ,メ,カ,オ,デ,サ,ハ,ベ,ダ,ジ,ブ,シ,ソ,セ,ミ,りゅ,ニ,ちゃ,ネ,パ,グ,ズ,ノ,ワ,ショ,ぺ,ペ,キ,ケ,きゃ,ガ,ニュ,ジョ,ツ,モ,びょ,ホ,ゴ,ジャ,みょ,ぷ,ゼ,ピ,ユ,じゃ,ボ,ぬ,ヘ,ヤ,シャ,ザ,ぴ,ヒ,キャ,ひゃ,シュ,ミュ,ギ,ジュ,ビュ,ピュ,ぢ,ヌ,チャ,チュ,りゃ,ゲ,ヨ,ヲ,キュ,みゃ,ぢょ,にょ,ぎゃ,ゾ,キョ,ヒャ,ヒュ,ヒュ,ヒョ,ミャ,みゅ,ミョ,ぢゃ,X,ぢゅ,X,X,チョ,リャ,リュ,リョ,びゃ,ビャ,びゅ,ビョ,にゃ,ニャ,ニョ,ギャ,ぎゅ,ギュ,ギョ,ぴゃ,ピャ,ピュ,ピョ,ヂ,ヅ".split(",");
     let output = "";
     for (let syllable of ordered) {
-        if (syllable in hiraganaDictionary) {
+        if (syllable in dictionary) {
             output += syllable;
         }
     }
     return output;
 };
 
-export let hiraganaFrequencyOrder = getHiraganaByFrequency ();
+export const hiraganaFrequencyOrder = getByFrequency (hiraganaDictionary);
+export const katakanaFrequencyOrder = getByFrequency (katakanaDictionary);
