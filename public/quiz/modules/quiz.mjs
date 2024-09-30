@@ -116,6 +116,14 @@ export let Quiz = function () {
 
             // set the background color on the clicked element to red
             this.buttons[button_id].style.backgroundColor = "red";
+            this.buttons[button_id].style.color = "white";
+
+            // find the right answer and set it to green
+            for (let button of this.buttons) {
+                if (button.innerHTML === this.quizKey.value) {
+                    button.style.backgroundColor = "rgba(0,255,0,0.5)";
+                }
+            }
 
             // reset the score
             this.correct = 0;
@@ -164,8 +172,10 @@ export let Quiz = function () {
 
         // set the answers on the buttons, cheat if we should
         for (let i = 0; i < this.difficulty; ++i) {
-            this.buttons[i].innerHTML = values[i];
-            this.buttons[i].style.backgroundColor = ((values[i] === quizKey.value) && !(quizKey.value in this.known)) ? "rgba(0,255,0,0.5)" : "white";
+            let button = this.buttons[i];
+            button.innerHTML = values[i];
+            button.style.backgroundColor = ((values[i] === quizKey.value) && !(quizKey.value in this.known)) ? "rgba(0,255,0,0.5)" : "white";
+            button.style.color = "black";
         }
     };
 
