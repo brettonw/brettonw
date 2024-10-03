@@ -1,20 +1,11 @@
 - add choices about the dictionary to use, so there's:
-    + hiragana (lexigraphical order)
-    + hiragana (frequency order)
-    + hiragana (random order)
-
-    + katakana (lexigraphical order)
-    + katakana (frequency order)
-    + katakana (random order)
 
     + kanji (frequency order)
     + kanji (random order)
 
-    + vocabulary (presentation order)
-    + vocabulary (random order)
-
 - some form of scoring mechanism?
 - better sounds
 - difficulty selection
-- make the keys work with arrays instead of a string
-- include J12
+- separate J12 kanji from vocabulary?
+- include a cumulative vocabulary?
+- pass the title to the quiz
