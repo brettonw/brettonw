@@ -24,7 +24,9 @@ const keysDictionary = {
     "hiragana": {
         "lexicographic": hiraganaLexicographicOrder,
         "frequency": hiraganaFrequencyOrder,
+        "j12_week1_base": J12.week1_hiragana_base,
         "j12_week1": J12.week1_hiragana,
+        "j12_week2_base": J12.week2_hiragana_base,
         "j12_week2": J12.week2_hiragana
     },
     "katakana": {

@@ -90,6 +90,7 @@ export let Quiz = function () {
         // save the dictionary and the keys to use
         let dictionary = this.dictionary = parameters.dictionary;
         this.keys = "keys" in parameters ? parameters.keys : Object.keys (dictionary).reduce ((acc, val) => { return acc + val;},  "");
+        console.log(`Keys = ${this.keys}`);
 
         // double extra important
         return this;
@@ -181,7 +182,7 @@ export let Quiz = function () {
 
     _.display = function () {
         this.correctElement.innerHTML = this.correct + " / " + this.target;
-        this.levelElement.innerHTML = this.level;
+        this.levelElement.innerHTML = this.level + " / " + this.keys.length;
     };
 
     _.start = function () {

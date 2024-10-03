@@ -1,6 +1,24 @@
+import {hiraganaDictionary} from "./japanese.mjs";
+import {} from "./utility.mjs";
+
+let extractSyllabaryFromVocabulary = function (vocabulary, syllabary, start = "") {
+    let extracted = {};
+    for (const character of start) {
+        extracted[character] = character;
+    }
+    for (const key of Object.keys(vocabulary)) {
+        for (const character of key) {
+            if (character in syllabary) {
+                extracted[character] = character;
+            }
+        }
+    }
+    return Object.keys (extracted).shuffle().join("");
+};
+
 export let J12 = function () {
     let _ = Object.create (null);
-    _.week1_hiragana = "あいうえお";
+    _.week1_hiragana_base = "あいうえお";
     _.week1_vocabulary = {
         // focus words
         "なん": "what",
@@ -38,8 +56,9 @@ export let J12 = function () {
         "水（みず）": "water",
         "はい": "yes"
     };
+    _.week1_hiragana = extractSyllabaryFromVocabulary (_.week1_vocabulary, hiraganaDictionary, _.week1_hiragana_base);
 
-    _.week2_hiragana = "かきくけこさしすせそは";
+    _.week2_hiragana_base = "かきくけこさしすせそは";
     _.week2_vocabulary = {
         // focus words
         "いきます": "go",
@@ -75,6 +94,7 @@ export let J12 = function () {
         "じゃまた": "see you",
         "何（なに・なん）": "what"
     };
+    _.week2_hiragana = extractSyllabaryFromVocabulary (_.week2_vocabulary, hiraganaDictionary, _.week2_hiragana_base);
 
     _.week3_hiragana = "";
     _.week3_vocabulary = {"": ""};
