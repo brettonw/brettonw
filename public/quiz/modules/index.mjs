@@ -9,6 +9,7 @@ import {} from "./utility.mjs";
 const urlParams = new URLSearchParams(window.location.search);
 
 // access specific query parameters
+const title = urlParams.has("title") ? urlParams.get("title") : "Quiz";
 const difficulty = urlParams.has("difficulty") ? parseInt(urlParams.get("difficulty"), 10) : 4;
 const dictionaryName = urlParams.has("dictionary") ? urlParams.get("dictionary") : "hiragana";
 const keysName = urlParams.has("keys") ? urlParams.get("keys") : "random";
@@ -36,4 +37,4 @@ const keysDictionary = {
 }[dictionaryName] || {};
 const keys = keysName in keysDictionary ? keysDictionary[keysName] : Object.keys (dictionary).shuffle();
 
-Quiz.new ({ difficulty: difficulty, dictionary: dictionary, keys: keys, word: "word-content" }).start();
+Quiz.new ({ title: title, difficulty: difficulty, dictionary: dictionary, keys: keys, word: "word-content" }).start();

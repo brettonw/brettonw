@@ -51,11 +51,16 @@ export let Quiz = function () {
 
     // initialize a new quiz object
     _.init = function (parameters) {
+        // set the title
+        const title = "title" in parameters ? parameters.title : "Quiz"
+        document.title = title;
+        document.getElementById("title").innerHTML = title;
+
         // get the names of the qiz elements
-        let wordName = "word" in parameters ? parameters.word: "word";
-        let buttonsName = "buttons" in parameters ? parameters.buttons: "buttons";
-        let correctName = "correct" in parameters ? parameters.correct: "correct";
-        let levelName = "level" in parameters ? parameters.level: "level";
+        const wordName = "word" in parameters ? parameters.word: "word";
+        const buttonsName = "buttons" in parameters ? parameters.buttons: "buttons";
+        const correctName = "correct" in parameters ? parameters.correct: "correct";
+        const levelName = "level" in parameters ? parameters.level: "level";
 
         // get the actual quiz elements
         this.wordElement = document.getElementById(wordName);
@@ -70,7 +75,7 @@ export let Quiz = function () {
         this.wrongSoundElement.volume = 0.25
 
         // figure the difficulty with a default of 4
-        let difficulty = "difficulty" in parameters ? parameters.difficulty : 4;
+        const difficulty = "difficulty" in parameters ? parameters.difficulty : 4;
 
         // create the buttons for the requested difficulty
         let $ = this;
@@ -122,7 +127,7 @@ export let Quiz = function () {
             // find the right answer and set it to green
             for (let button of this.buttons) {
                 if (button.innerHTML === this.quizKey.value) {
-                    button.style.backgroundColor = "rgba(0,255,0,0.5)";
+                    button.style.backgroundColor = "rgb(128,255,128)";
                 }
             }
 
@@ -175,7 +180,7 @@ export let Quiz = function () {
         for (let i = 0; i < this.difficulty; ++i) {
             let button = this.buttons[i];
             button.innerHTML = values[i];
-            button.style.backgroundColor = ((values[i] === quizKey.value) && !(quizKey.value in this.known)) ? "rgba(0,255,0,0.5)" : "white";
+            button.style.backgroundColor = ((values[i] === quizKey.value) && !(quizKey.value in this.known)) ? "rgb(128,255,128)" : "white";
             button.style.color = "black";
         }
     };

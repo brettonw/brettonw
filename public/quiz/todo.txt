@@ -9,3 +9,8 @@
 - separate J12 kanji from vocabulary?
 - include a cumulative vocabulary?
 - pass the title to the quiz
+- implement 3 lives +1 for each 10 levels cleared without error
+- size the content for the box better
+- background music
+- background image
+- add credits (for music... ?)

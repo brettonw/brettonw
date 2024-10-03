@@ -8,6 +8,18 @@
 <style>
     * {
         box-sizing: border-box;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url("images/background.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
     body, html {
@@ -21,8 +33,16 @@
         overflow: auto;
     }
 
-    #outer {
+    h2 {
+        margin: 0;
         width: 100%;
+        text-align: center;
+        font-weight: normal;
+        font-size: 2.5em;
+    }
+
+    #outer {
+        width: 90%;
         height: 90%;
     }
 
@@ -35,20 +55,19 @@
 
     .square {
         position: relative;
-        background-color: white;
-        margin: 10px;
+        margin: 5px;
     }
 
     .outlined {
-        border: lightgray 1px solid;
+        border: black 2px solid;
         display: flex;
         justify-content: center; /* horizontally centers the text */
         align-items: center;     /* vertically centers the text */
         text-align: center;      /* optional, aligns text within the box */
-        font-family: Helvetica, Arial, sans-serif;
         font-size: 5vh;
         width: 100%;
         height: 100%;
+        background-color: white;
     }
 
     .big {
@@ -58,23 +77,22 @@
     .gridbox {
         display: grid;
         place-items: center;
-        /*grid-template-rows: repeat(3, 1fr); */ /* Adjust 5 to the number of boxes */
-        gap: 20px;                             /* Space between the boxes */
+        gap: 10px;
     }
 
     /* for wider layouts, squares side by side */
     @media (min-aspect-ratio: 1/1) {
         .square {
-            width: calc((100vw - 40px) * 0.5);
-            height: calc((100vw - 40px) * 0.5);
+            width: calc((100vw - 20px) * 0.45);
+            height: calc((100vw - 20px) * 0.45);
         }
     }
 
     /* for taller layouts, squares stacked vertically */
     @media (max-aspect-ratio: 1/1) {
         .square {
-            width: calc((90vh - 40px) * 0.5);
-            height: calc((90vh - 40px) * 0.45);
+            width: calc((90vh - 20px) * 0.45);
+            height: calc((90vh - 20px) * 0.45);
         }
         #container {
             flex-direction: column;
@@ -83,22 +101,22 @@
 
     .correct {
         position: absolute; /* absolute relative to .word */
-        top: 10px;
-        left: 10px;
-        width: 120px;
-        height: 36px;
+        bottom: 5px;
+        left: 5px;
+        width: 5em;
+        height: 1.75em;
         background-color: rgba(240, 190, 128, 0.33);
-        font-size: 28px;
+        font-size: 1em;
     }
 
     .level {
         position: absolute; /* absolute relative to .word */
-        top: 10px;
-        right: 10px;
-        width: 120px;
-        height: 36px;
+        bottom: 5px;
+        right: 5px;
+        width: 5em;
+        height: 1.75em;
         background-color: rgba(173, 216, 230, 0.33);
-        font-size: 28px;
+        font-size: 1em;
     }
 
     #word-content {
@@ -106,8 +124,9 @@
         height: 100%;
     }
     </style>
-<body><div id="outer"><div id="container"><div id="word" class="square"><div id="correct" class="outlined correct">0</div><div id="level" class="outlined level">0</div><div id="word-content" class="outlined big"></div></div><div id="buttons" class="square gridbox"></div></div></div></body>
+<body><div id="outer"><h2 id="title">Title</h2><div id="container"><div id="word" class="square"><div id="correct" class="outlined correct">0</div><div id="level" class="outlined level">0</div><div id="word-content" class="outlined big"></div></div><div id="buttons" class="square gridbox"></div></div></div></body>
 <audio id="correctSound" src="sounds/correct.mp3" preload="auto"></audio>
 <audio id="wrongSound" src="sounds/wrong.mp3" preload="auto"></audio>
+<audio id="backgroundSound" src="sounds/background.mp3" preload="auto"></audio>
 <script type="module" src="modules/index.mjs"></script>
 </html>
